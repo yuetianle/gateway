@@ -1,0 +1,1 @@
+$(SolutionDir)..\vistek_sdk\common_gateways\device_gateway_loaderV1\include;$(SolutionDir)..\vistek_sdk\device_gateway_helperV1\include;$(SolutionDir)..\vistek_sdk\common_gateways\device_gateway_loaderV1;%(AdditionalIncludeDirectories)

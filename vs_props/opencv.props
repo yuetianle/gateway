@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <opencv_home>$(sdk_root)\opencv</opencv_home>
+    <opencv_include>$(opencv_home)\build\include\</opencv_include>
+    <opencv_static_lib>$(opencv_home)\build\$(PlatformShortName)\$(PlatformToolset)\staticlib\</opencv_static_lib>
+    <opencv_lib>$(opencv_home)\build\$(PlatformShortName)\$(PlatformToolset)\lib\</opencv_lib>
+    <opencv_bin>$(opencv_home)\build\$(PlatformShortName)\$(PlatformToolset)\bin\</opencv_bin>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(opencv_include);$(IncludePath)</IncludePath>
+    <LibraryPath>$(opencv_lib);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="opencv_home">
+      <Value>$(opencv_home)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="opencv_include">
+      <Value>$(opencv_include)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="opencv_static_lib">
+      <Value>$(opencv_static_lib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="opencv_lib">
+      <Value>$(opencv_lib)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="opencv_bin">
+      <Value>$(opencv_bin)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

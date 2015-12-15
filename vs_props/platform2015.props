@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <sdk_root>$(Registry:HKEY_LOCAL_MACHINE\Software\vistek\dev@sdk_root)</sdk_root>
+    <BoostHome>$(sdk_root)\boost_1_57_0\</BoostHome>
+    <BoostLib>$(BoostHome)stage\$(PlatformToolset)\$(Platform)\lib\</BoostLib>
+    <CommonSrcDir>$(SolutionDir)..\common\</CommonSrcDir>
+    <LocalSrcDir>$(ProjectDir)</LocalSrcDir>
+    <iolib>$(SolutionDir)..\common\iolib\</iolib>
+    <comm_protocols_home>$(SolutionDir)..\comm_protocols\</comm_protocols_home>
+    <comm_protocols_include>$(comm_protocols_home)include\</comm_protocols_include>
+    <comm_protocols_gen>$(comm_protocols_home)gen\</comm_protocols_gen>
+    <vistek_logger_inc>$(SolutionDir)..\vistek_logger\include\</vistek_logger_inc>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(IncludePath);$(BoostHome);</IncludePath>
+    <OutDir>$(SolutionDir)__solution\__output\$(PlatformShortName)\$(Configuration)\</OutDir>
+    <LibraryPath>$(BoostLib);$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)__solution\__obj\$(PlatformShortName)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;$(LocalSrcDir)include;$(CommonSrcDir)include;$(vistek_logger_inc)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalOptions>-Zo -Zm256 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="sdk_root">
+      <Value>$(sdk_root)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="BoostHome">
+      <Value>$(BoostHome)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="BoostLib">
+      <Value>$(BoostLib)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="CommonSrcDir">
+      <Value>$(CommonSrcDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LocalSrcDir">
+      <Value>$(LocalSrcDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="iolib">
+      <Value>$(iolib)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="comm_protocols_home">
+      <Value>$(comm_protocols_home)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="comm_protocols_include">
+      <Value>$(comm_protocols_include)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="comm_protocols_gen">
+      <Value>$(comm_protocols_gen)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

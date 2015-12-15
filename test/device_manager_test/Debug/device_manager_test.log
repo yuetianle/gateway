@@ -1,0 +1,11 @@
+﻿Build started 2015/12/9 11:31:08.
+     1>Project "D:\github\gateway\test\device_manager_test\device_manager_test.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\github\gateway\solution_vs\..\common\libasio\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\device_manager_test.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+     1>d:\github\gateway\test\device_manager_test\stdafx.h(12): fatal error C1083: Cannot open include file: 'pre_std_basic.h': No such file or directory
+     1>Done Building Project "D:\github\gateway\test\device_manager_test\device_manager_test.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.19

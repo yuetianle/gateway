@@ -1,0 +1,123 @@
+##
+## Auto Generated makefile by CodeLite IDE
+## any manual changes will be erased      
+##
+## Debug
+ProjectName            :=vistek_logger
+ConfigurationName      :=Debug
+WorkspacePath          := "/home/fjw/src/platform2014/solution_cl/media_service"
+ProjectPath            := "/home/fjw/src/platform2014/vistek_logger"
+IntermediateDirectory  :=$(WorkspacePath)/../__obj/$(ConfigurationName)/$(ProjectName)
+OutDir                 := $(IntermediateDirectory)
+CurrentFileName        :=
+CurrentFilePath        :=
+CurrentFileFullPath    :=
+User                   :=fjw
+Date                   :=01/25/15
+CodeLitePath           :="/home/fjw/.codelite"
+LinkerName             :=/usr/bin/clang++ 
+SharedObjectLinkerName :=/usr/bin/clang++ -shared -fPIC
+ObjectSuffix           :=.o
+DependSuffix           :=.o.d
+PreprocessSuffix       :=.i
+DebugSwitch            :=-g 
+IncludeSwitch          :=-I
+LibrarySwitch          :=-l
+OutputSwitch           :=-o 
+LibraryPathSwitch      :=-L
+PreprocessorSwitch     :=-D
+SourceSwitch           :=-c 
+OutputFile             :=$(WorkspacePath)/__output/$(ConfigurationName)/lib$(ProjectName).so
+Preprocessors          :=
+ObjectSwitch           :=-o 
+ArchiveOutputSwitch    := 
+PreprocessOnlySwitch   :=-E
+ObjectsFileList        :="vistek_logger.txt"
+PCHCompileFlags        :=
+MakeDirCommand         :=mkdir -p
+LinkOptions            :=  
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)include $(IncludeSwitch)../common/include $(IncludeSwitch)../vistek_logger/include $(IncludeSwitch)../comm_contracts/include $(IncludeSwitch)../comm_contracts/gen 
+IncludePCH             :=  -include ./stdafx.h 
+RcIncludePath          := 
+Libs                   := 
+ArLibs                 :=  
+LibPath                := $(LibraryPathSwitch)$(WorkspacePath)/__output/$(ConfigurationName)/ 
+
+##
+## Common variables
+## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
+##
+AR       := /usr/bin/llvm-ar rcu
+CXX      := /usr/bin/clang++ 
+CC       := /usr/bin/clang 
+CXXFLAGS := -m64 -std=c++11 -fPIC -g $(Preprocessors)
+CFLAGS   :=  -g $(Preprocessors)
+ASFLAGS  := 
+AS       := /usr/bin/llvm-as 
+
+
+##
+## User defined environment variables
+##
+CodeLiteDir:=/usr/share/codelite
+Objects0=$(IntermediateDirectory)/src_vistek_logger.cpp$(ObjectSuffix) 
+
+
+
+Objects=$(Objects0) 
+
+##
+## Main Build Targets 
+##
+.PHONY: all clean PreBuild PrePreBuild PostBuild
+all: $(OutputFile)
+
+$(OutputFile): $(IntermediateDirectory)/.d $(Objects) 
+	@$(MakeDirCommand) $(@D)
+	@echo "" > $(IntermediateDirectory)/.d
+	@echo $(Objects0)  > $(ObjectsFileList)
+	$(SharedObjectLinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
+	@$(MakeDirCommand) "/home/fjw/src/platform2014/solution_cl/media_service/.build-debug"
+	@echo rebuilt > "/home/fjw/src/platform2014/solution_cl/media_service/.build-debug/vistek_logger"
+
+PostBuild:
+	@echo Executing Post Build commands ...
+	rm $(ProjectPath)/$(ProjectName).txt
+	cp $(ProjectName).mk Makefile.$(ConfigurationName)
+	@echo Done
+
+$(IntermediateDirectory)/.d:
+	@test -d $(WorkspacePath)/../__obj/$(ConfigurationName)/$(ProjectName) || $(MakeDirCommand) $(WorkspacePath)/../__obj/$(ConfigurationName)/$(ProjectName)
+
+PreBuild:
+
+# PreCompiled Header
+./stdafx.h.gch: ./stdafx.h
+	$(CXX) $(SourceSwitch) ./stdafx.h $(PCHCompileFlags) $(CXXFLAGS) $(IncludePath)
+
+
+
+##
+## Objects
+##
+$(IntermediateDirectory)/src_vistek_logger.cpp$(ObjectSuffix): src/vistek_logger.cpp $(IntermediateDirectory)/src_vistek_logger.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/fjw/src/platform2014/vistek_logger/src/vistek_logger.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_vistek_logger.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_vistek_logger.cpp$(DependSuffix): src/vistek_logger.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_vistek_logger.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_vistek_logger.cpp$(DependSuffix) -MM "src/vistek_logger.cpp"
+
+$(IntermediateDirectory)/src_vistek_logger.cpp$(PreprocessSuffix): src/vistek_logger.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_vistek_logger.cpp$(PreprocessSuffix) "src/vistek_logger.cpp"
+
+
+-include $(IntermediateDirectory)/*$(DependSuffix)
+##
+## Clean
+##
+clean:
+	$(RM) $(WorkspacePath)/../__obj/$(ConfigurationName)/$(ProjectName)/*$(ObjectSuffix)
+	$(RM) $(WorkspacePath)/../__obj/$(ConfigurationName)/$(ProjectName)/*$(DependSuffix)
+	$(RM) $(OutputFile)
+	$(RM) "../solution_cl/media_service/.build-debug/vistek_logger"
+	$(RM) ./stdafx.h.gch
+
+

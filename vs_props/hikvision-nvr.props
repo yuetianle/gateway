@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <sdk_root>$(Registry:HKEY_LOCAL_MACHINE\Software\vistek\dev@sdk_root)</sdk_root>
+    <hikvision_provider_home>$(sdk_root)hikvision_provider\</hikvision_provider_home>
+    <hikvision_provider_include>$(hikvision_provider_home)include</hikvision_provider_include>
+    <hikvision_provider_lib>$(hikvision_provider_home)lib</hikvision_provider_lib>
+    <hikvision_provider_bin>$(hikvision_provider_home)bin</hikvision_provider_bin>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="sdk_root">
+      <Value>$(sdk_root)</Value>
+    </BuildMacro>
+    <BuildMacro Include="hikvision_provider_home">
+      <Value>$(hikvision_provider_home)</Value>
+    </BuildMacro>
+    <BuildMacro Include="hikvision_provider_include">
+      <Value>$(hikvision_provider_include)</Value>
+    </BuildMacro>
+    <BuildMacro Include="hikvision_provider_lib">
+      <Value>$(hikvision_provider_lib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="hikvision_provider_bin">
+      <Value>$(hikvision_provider_bin)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

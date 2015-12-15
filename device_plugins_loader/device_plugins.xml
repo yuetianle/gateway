@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin_list>
+  <plugin name="hikvision" dir="hikvision" prefix="device_plugins_hikvision"></plugin>
+  <plugin name="psia" dir="psia" prefix="device_plugins_psia"></plugin>
+  <plugin name="onvif" dir="onvif" prefix="device_plugins_onvif"></plugin>
+  <plugin name="dahua" dir="dahua" prefix="device_plugins_dahua"></plugin>
+</plugin_list>

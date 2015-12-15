@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <sdk_root>$(Registry:HKEY_LOCAL_MACHINE\Software\vistek\dev@sdk_root)</sdk_root>
+    <python2_home>$(sdk_root)python2.7\</python2_home>
+    <python2_lib>$(python2_home)libs</python2_lib>
+    <python2_include>$(python2_home)include</python2_include>
+    <python2_bin>$(python2_home)bin\</python2_bin>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(python2_include);$(IncludePath)</IncludePath>
+    <LibraryPath>$(python2_lib);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="sdk_root">
+      <Value>$(sdk_root)</Value>
+    </BuildMacro>
+    <BuildMacro Include="python2_home">
+      <Value>$(python2_home)</Value>
+    </BuildMacro>
+    <BuildMacro Include="python2_lib">
+      <Value>$(python2_lib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="python2_include">
+      <Value>$(python2_include)</Value>
+    </BuildMacro>
+    <BuildMacro Include="python2_bin">
+      <Value>$(python2_bin)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

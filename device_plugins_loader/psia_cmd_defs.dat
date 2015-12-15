@@ -1,0 +1,22 @@
+#ifdef _PSIA_CMD
+SERVICENODE(S_rootnode, "/PSIA")
+SERVICENODE(S_system, "/PSIA/System")
+SERVICENODE(S_storage, "/PSIA/System/Storage")
+SERVICENODE(S_network, "/PSIA/System/Network")
+SERVICENODE(S_io, "/PSIA/System/IO")
+SERVICENODE(S_audio, "/PSIA/System/Audio")
+SERVICENODE(S_video, "/PSIA/System/Video")
+SERVICENODE(S_serial, "/PSIA/System/Serial")
+SERVICENODE(S_diag, "/PSIA/Diagnostics")
+SERVICENODE(S_security, "/PSIA/Security")
+SERVICENODE(S_aaa, "/PSIA/Security/AAA")
+SERVICENODE(S_streaming, ("/PSIA/Streaming"))
+SERVICENODE(S_ptz, "/PSIA/PTZ")
+SERVICENODE(S_motion, "/PSIA/Custom/MotionDetection")
+SERVICENODE(S_event, "/PSIA/Custom/Event")
+#endif
+
+#ifdef _PSIA_CMD_RESRC
+RESOURCENODE(R_reboot, ("PSIA/System/reboot"));
+RESOURCENODE(R_channels, ("/channels"));
+#endif

@@ -1,0 +1,10 @@
+#ifdef _FUNC_PARAMS_NAME_LISTS
+
+FUNC_PARAM_NAME(device_id_name, "device_id")
+FUNC_PARAM_NAME(ip_name, "ip")
+FUNC_PARAM_NAME(port_name, "port")
+FUNC_PARAM_NAME(user_name, "user")
+FUNC_PARAM_NAME(password_name, "password")
+FUNC_PARAM_NAME(channel_name, "channel")//设备通道号
+FUNC_PARAM_NAME(stream_id_name, "stream_id")//码流类型
+#endif

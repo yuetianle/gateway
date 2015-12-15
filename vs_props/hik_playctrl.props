@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <hik_playctrl_home>$(sdk_root)\hik_playctrl\windows\</hik_playctrl_home>
+    <hik_playctrl_include>$(hik_playctrl_home)$(Platform)\include</hik_playctrl_include>
+    <hik_playctrl_lib>$(hik_playctrl_home)$(Platform)\lib</hik_playctrl_lib>
+    <hik_playctrl_bin>$(hik_playctrl_home)$(Platform)\bin</hik_playctrl_bin>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(hik_playctrl_include);$(IncludePath)</IncludePath>
+    <LibraryPath>$(hik_playctrl_lib);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>PlayCtrl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="hik_playctrl_home">
+      <Value>$(hik_playctrl_home)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="hik_playctrl_include">
+      <Value>$(hik_playctrl_include)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="hik_playctrl_lib">
+      <Value>$(hik_playctrl_lib)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="hik_playctrl_bin">
+      <Value>$(hik_playctrl_bin)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

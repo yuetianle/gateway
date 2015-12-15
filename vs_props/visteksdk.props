@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <sdk_root>$(Registry:HKEY_LOCAL_MACHINE\Software\vistek\dev@sdk_root)</sdk_root>
+    <vistek_home>$(sdk_root)visteksdk\</vistek_home>
+    <vistek_include>$(vistek_home)include</vistek_include>
+    <vistek_lib>$(vistek_home)lib</vistek_lib>
+    <vistek_bin>$(vistek_home)bin</vistek_bin>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(vistek_include);$(IncludePath)</IncludePath>
+    <LibraryPath>$(vistek_lib);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="sdk_root">
+      <Value>$(sdk_root)</Value>
+    </BuildMacro>
+    <BuildMacro Include="vistek_home">
+      <Value>$(vistek_home)</Value>
+    </BuildMacro>
+    <BuildMacro Include="vistek_include">
+      <Value>$(vistek_include)</Value>
+    </BuildMacro>
+    <BuildMacro Include="vistek_lib">
+      <Value>$(vistek_lib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="vistek_bin">
+      <Value>$(vistek_bin)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+#ifdef _FUNC_LISTS
+FUNC_NAME(register_device, "register_device")
+FUNC_NAME(unregister_device, "unregister_device")
+FUNC_NAME(get_stream_url, "get_stream_url")
+FUNC_NAME(get_device_status, "get_device_status")
+FUNC_NAME(add_user, "add_user")
+FUNC_NAME(del_user, "del_user")
+FUNC_NAME(alter_user, "alter_user")
+#endif

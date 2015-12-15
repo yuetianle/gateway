@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <sdk_root>$(Registry:HKEY_LOCAL_MACHINE\Software\vistek\dev@sdk_root)</sdk_root>
+    <vsdk_ver>1</vsdk_ver>
+    <BoostHome>$(sdk_root)\boost_1_58_0\</BoostHome>
+    <BoostLib>$(BoostHome)stage\$(PlatformToolset)\$(Platform)\lib\</BoostLib>
+    <LocalSrcDir>$(ProjectDir)</LocalSrcDir>
+    <vistek_logger_incl>$(SolutionDir)..\common\vistek_logger\include</vistek_logger_incl>
+    <vistek_util_incl>$(SolutionDir)..\common\vistek_util\include</vistek_util_incl>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(IncludePath);$(BoostHome);</IncludePath>
+    <OutDir>$(SolutionDir)__solution\__output\$(PlatformShortName)\$(Configuration)\</OutDir>
+    <LibraryPath>$(BoostLib);$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)__solution\__obj\$(PlatformShortName)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <vsdk_suffix>-$(vsdk_ver)d</vsdk_suffix>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+    <vsdk_suffix>-$(vsdk_ver)</vsdk_suffix>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;$(LocalSrcDir)include;$(vistek_util_incl);$(vistek_logger_incl)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalOptions>-Zo -Zm256 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(vsdk_suffix)$(TargetExt)</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="sdk_root">
+      <Value>$(sdk_root)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="vsdk_ver">
+      <Value>$(vsdk_ver)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="vsdk_suffix">
+      <Value>$(vsdk_suffix)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="BoostHome">
+      <Value>$(BoostHome)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="BoostLib">
+      <Value>$(BoostLib)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LocalSrcDir">
+      <Value>$(LocalSrcDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="vistek_logger_incl">
+      <Value>$(vistek_logger_incl)</Value>
+    </BuildMacro>
+    <BuildMacro Include="vistek_util_incl">
+      <Value>$(vistek_util_incl)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <sdk_root>$(Registry:HKEY_LOCAL_MACHINE\Software\vistek\dev@sdk_root)</sdk_root>
+    <hik8200_home>$(sdk_root)hik8200</hik8200_home>
+    <hik8200_include>$(hik8200_home)\include</hik8200_include>
+    <hik8200_lib>$(hik8200_home)\lib</hik8200_lib>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(hik8200_include);.\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(hik8200_lib);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="sdk_root">
+      <Value>$(sdk_root)</Value>
+    </BuildMacro>
+    <BuildMacro Include="hik8200_home">
+      <Value>$(hik8200_home)</Value>
+    </BuildMacro>
+    <BuildMacro Include="hik8200_include">
+      <Value>$(hik8200_include)</Value>
+    </BuildMacro>
+    <BuildMacro Include="hik8200_lib">
+      <Value>$(hik8200_lib)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

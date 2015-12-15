@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="common" />
+		<Option pch_mode="2" />
+		<Option compiler="clang" />
+		<Build>
+			<Target title="xp x64">
+				<Option output="common" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option external_deps="libvistek_logger.a;" />
+				<Option type="2" />
+				<Option compiler="clang" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="/DWIN32" />
+					<Add option="/DNDEBUG" />
+					<Add option="/D_LIB" />
+					<Add directory="$(IncludePath)" />
+					<Add directory="C:/src/gitroot/platform2014/common/include" />
+				</Compiler>
+				<Linker>
+					<Add option="/debug" />
+					<Add library="libvistek_logger.a" />
+					<Add directory="$(LibraryPath)" />
+				</Linker>
+			</Target>
+			<Target title="Debug Win32">
+				<Option output="common" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option external_deps="libvistek_logger.a;" />
+				<Option type="2" />
+				<Option compiler="clang" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="/D__WIN32__" />
+					<Add option="/DWIN32" />
+					<Add option="/D_DEBUG" />
+					<Add option="/D_LIB" />
+					<Add directory="C:/src/gitroot/platform2014/common/include" />
+				</Compiler>
+				<Linker>
+					<Add option="/debug" />
+					<Add library="libvistek_logger.a" />
+				</Linker>
+			</Target>
+			<Target title="Debug x64">
+				<Option output="common" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option external_deps="libvistek_logger.a;" />
+				<Option type="2" />
+				<Option compiler="clang" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="/DWIN32" />
+					<Add option="/D_DEBUG" />
+					<Add option="/D_LIB" />
+					<Add directory="$(IncludePath)" />
+					<Add directory="C:/src/gitroot/platform2014/common/include" />
+				</Compiler>
+				<Linker>
+					<Add option="/debug" />
+					<Add library="libvistek_logger.a" />
+					<Add directory="$(LibraryPath)" />
+				</Linker>
+			</Target>
+			<Target title="Release x64">
+				<Option output="common" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option external_deps="libvistek_logger.a;" />
+				<Option type="2" />
+				<Option compiler="clang" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="/DWIN32" />
+					<Add option="/DNDEBUG" />
+					<Add option="/D_LIB" />
+					<Add directory="$(IncludePath)" />
+					<Add directory="C:/src/gitroot/platform2014/common/include" />
+				</Compiler>
+				<Linker>
+					<Add option="/debug" />
+					<Add library="libvistek_logger.a" />
+					<Add directory="$(LibraryPath)" />
+				</Linker>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="common" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option external_deps="libvistek_logger.a;" />
+				<Option type="2" />
+				<Option compiler="clang" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="/D__WIN32__" />
+					<Add option="/DWIN32" />
+					<Add option="/DNDEBUG" />
+					<Add option="/D_LIB" />
+					<Add directory="C:/src/gitroot/platform2014/common/include" />
+				</Compiler>
+				<Linker>
+					<Add option="/debug" />
+					<Add library="libvistek_logger.a" />
+				</Linker>
+			</Target>
+			<Target title="xp Win32">
+				<Option output="common" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option external_deps="libvistek_logger.a;" />
+				<Option type="2" />
+				<Option compiler="clang" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="/D__WIN32__" />
+					<Add option="/DWIN32" />
+					<Add option="/DNDEBUG" />
+					<Add option="/D_LIB" />
+					<Add directory="C:/src/gitroot/platform2014/common/include" />
+				</Compiler>
+				<Linker>
+					<Add option="/debug" />
+					<Add library="libvistek_logger.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="include/authentication_util.h" />
+		<Unit filename="include/base64.h" />
+		<Unit filename="include/data_cache.h" />
+		<Unit filename="include/md5.h" />
+		<Unit filename="include/pre_asio.h" />
+		<Unit filename="include/pre_boost_basic.h" />
+		<Unit filename="include/pre_lockfree.h" />
+		<Unit filename="include/pre_regex.h" />
+		<Unit filename="include/pre_std_basic.h" />
+		<Unit filename="include/ptz_base.h" />
+		<Unit filename="include/targetver.h" />
+		<Unit filename="include/uuid_util.h" />
+		<Unit filename="include/vistek_common.h" />
+		<Unit filename="include/vistek_compress_util.h" />
+		<Unit filename="include/vistek_device_defs.h" />
+		<Unit filename="include/vistek_error_code.h" />
+		<Unit filename="include/vistek_file_util.h" />
+		<Unit filename="include/vistek_instance_counter.h" />
+		<Unit filename="include/vistek_lock_defs.h" />
+		<Unit filename="include/vistek_mapping.h" />
+		<Unit filename="include/vistek_media_defs.h" />
+		<Unit filename="include/vistek_process.h" />
+		<Unit filename="include/vistek_product_util.h" />
+		<Unit filename="include/vistek_record_defs.h" />
+		<Unit filename="include/vistek_serialize_helper.h" />
+		<Unit filename="include/vistek_signal.h" />
+		<Unit filename="include/vistek_string_util.h" />
+		<Unit filename="include/vistek_thread_util.h" />
+		<Unit filename="include/vistek_time_util.h" />
+		<Unit filename="include/vistek_vod_defs.h" />
+		<Unit filename="src/authentication_util.cpp" />
+		<Unit filename="src/base64.cpp" />
+		<Unit filename="src/data_cache.cpp" />
+		<Unit filename="src/md5.cpp" />
+		<Unit filename="src/stdafx.cpp" />
+		<Unit filename="src/uuid_util.cpp" />
+		<Unit filename="src/vistek_compress_util.cpp" />
+		<Unit filename="src/vistek_file_util.cpp" />
+		<Unit filename="src/vistek_instance_counter.cpp" />
+		<Unit filename="src/vistek_mapping.cpp" />
+		<Unit filename="src/vistek_media_defs.cpp" />
+		<Unit filename="src/vistek_process.cpp" />
+		<Unit filename="src/vistek_product_util.cpp" />
+		<Unit filename="src/vistek_record_defs.cpp" />
+		<Unit filename="src/vistek_serialize_helper.cpp" />
+		<Unit filename="src/vistek_signal.cpp" />
+		<Unit filename="src/vistek_thread_util.cpp" />
+		<Unit filename="src/vistek_time_util.cpp" />
+		<Unit filename="stdafx.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

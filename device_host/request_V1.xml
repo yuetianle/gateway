@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- msg_id 	消息的唯一ID required -->
+<!-- dev_id 	设备唯一ID required -->
+<!-- res_type 返回数据类型 xml json option-->
+<!-- manufacture 厂商类型 -->
+<request msg_id="xxx" dev_id="" res_type="xxx" manufacture="">
+  <uri></uri><!-- uri    		命令URI required  -->
+  <ext_params></ext_params><!-- ext_params 额外参数 option -->
+</request>

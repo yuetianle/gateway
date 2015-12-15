@@ -1,0 +1,9 @@
+
+<!-- 执行具体设备命令回应 -->
+<!-- msg_id 消息的唯一ID required -->
+<!-- dev_id 设备唯一ID required -->
+<!-- res_type 返回数据类型 xml json -->
+<!-- manufacture 厂商类型 -->
+<response msg_id="xxx" dev_id="xxx" res_type="xxx" manufacture="">
+</response>
+	

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <va_home>$(sdk_root)\vistek_algorithm\release</va_home>
+    <va_inc>$(va_home)\include\</va_inc>
+    <va_lib>$(va_home)\lib\</va_lib>
+    <va_bin>$(va_home)\bin\</va_bin>
+    <va_3rd>$(va_home)\3rd\</va_3rd>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(va_inc);$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="va_home">
+      <Value>$(va_home)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="va_inc">
+      <Value>$(va_inc)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="va_lib">
+      <Value>$(va_lib)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="va_bin">
+      <Value>$(va_bin)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="va_3rd">
+      <Value>$(va_3rd)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

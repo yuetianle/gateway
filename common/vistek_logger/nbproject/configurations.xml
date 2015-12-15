@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>include/log_color.h</itemPath>
+      <itemPath>include/vistek_logger.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>src/vistek_logger.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>CLang|CLang</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <architecture>2</architecture>
+          <standard>8</standard>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>include</pElem>
+            <pElem>../common/include</pElem>
+            <pElem>~/sdk/boost_1_56_0</pElem>
+          </incDir>
+          <commandLine>-pthread</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>../__output/${CND_CONF}/${CND_PLATFORM}/libvistek_logger.${CND_DLIB_EXT}</output>
+          <linkerAddLib>
+            <pElem>../__output/${CND_CONF}/${CND_PLATFORM}</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
+            <linkerLibLibItem>boost_system</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="include/log_color.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/vistek_logger.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/vistek_logger.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>CLang|CLang</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <standard>8</standard>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>include</pElem>
+            <pElem>../common/include</pElem>
+            <pElem>~/sdk/boost_1_56_0</pElem>
+          </incDir>
+          <commandLine>-pthread</commandLine>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <output>../__output/${CND_CONF}/${CND_PLATFORM}/libvistek_logger.${CND_DLIB_EXT}</output>
+          <linkerAddLib>
+            <pElem>../__output/${CND_CONF}/${CND_PLATFORM}</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
+            <linkerLibLibItem>boost_system</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="include/log_color.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/vistek_logger.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/vistek_logger.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
