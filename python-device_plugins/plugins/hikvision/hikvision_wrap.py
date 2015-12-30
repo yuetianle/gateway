@@ -114,7 +114,6 @@ def load_dll(dll_name):
     else:
         test_logger.logger.debug("init fail")
         return None
-
 def register_device(device_id, ip, port, user_name, user_pwd):
     """ register a hikvision device"""
     global DllHandle
@@ -205,7 +204,6 @@ def get_stream_url(device_id, channel):
     #urls_xml = ET.tostring(urls)
     print('return:', urls_xml, 'type:', type(urls_xml), 'len:', len(urls_xml), 'type:',type(len(urls_xml)))
     return (urls_xml, len(urls_xml))
-
 def get_device_status(device_id, channel=None):
     """ get device status"""
     global device_lists
