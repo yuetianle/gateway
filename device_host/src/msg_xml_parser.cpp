@@ -3,7 +3,7 @@
 
 
 msg_xml_parser::msg_xml_parser(const string &xml_msg)
-	:m_xml_msg(xml_msg)
+	:m_xml_msg(xml_msg), m_is_invaild(false)
 {
 	_parser();
 }
@@ -28,8 +28,10 @@ int msg_xml_parser::_parser()
 			m_msg_header = make_tuple(request_mesg_id, device_id, res_type, manufacture_name);
 			m_uri = request_node.child(DEVICE_URI_NODE_NAME).text().as_string();
 			m_params = request_node.child(DEVICE_EXT_CONTENT_NODE_NAME).text().as_string();
+			m_is_invaild = false;
 			return v_OK;
 		}
 	}
+	m_is_invaild = true;
 	return v_ERR_Bad_XML;
 }

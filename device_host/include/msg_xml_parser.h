@@ -18,6 +18,7 @@ public:
 	string res_type() { return std::get<2>(m_msg_header); }
 	string manufacture(){ return get<3>(m_msg_header); }
 	MSG_HEADER msg_header() { return m_msg_header; }
+	bool is_invaild() { return m_is_invaild; }
 private:
 	int _parser();
 private:
@@ -26,6 +27,7 @@ private:
 	MSG_HEADER m_msg_header;
 	string m_xml_msg;
 	pugi::xml_document m_doc;
+	bool m_is_invaild;
 };
 
 #endif

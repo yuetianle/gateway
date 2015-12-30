@@ -36,11 +36,13 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\vs_props\platform.props" />
     <Import Project="..\vs_props\vistek_gateway_sdk.props" />
+    <Import Project="..\vs_props\python2.7.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\vs_props\platform.props" />
     <Import Project="..\vs_props\vistek_gateway_sdk.props" />
+    <Import Project="..\vs_props\python2.7.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -97,16 +99,20 @@
     <ClInclude Include="include\msg_processer.h" />
     <ClInclude Include="include\msg_xml_builder.h" />
     <ClInclude Include="include\msg_xml_parser.h" />
+    <ClInclude Include="include\python_module_loader.h" />
+    <ClInclude Include="msg_manager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="msg_manager.cpp" />
     <ClCompile Include="src\device_data_node.cpp" />
     <ClCompile Include="src\device_host.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\msg_processer.cpp" />
     <ClCompile Include="src\msg_xml_builder.cpp" />
     <ClCompile Include="src\msg_xml_parser.cpp" />
+    <ClCompile Include="src\python_module_loader.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
