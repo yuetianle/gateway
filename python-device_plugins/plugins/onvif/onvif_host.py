@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from onvif import ONVIFCamera
-import onvif
+from vonvif import ONVIFCamera
+import vonvif
 import os
 try:
     import xml.etree.cElementTree as ET
@@ -17,7 +17,7 @@ class onvif_host:
         self.port = port
         self.username = username
         self.password = password
-        wsdl_path = os.path.join(os.path.dirname(onvif.__file__), os.path.pardir, "wsdl")
+        wsdl_path = os.path.join(os.path.dirname(vonvif.__file__), os.path.pardir, "wsdl")
         self.camera = ONVIFCamera(ip, port, username, password, wsdl_path)
     def get_stream_url(self, stream_urls=None):
         media_capability_name ='Meda'
