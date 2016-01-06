@@ -1,0 +1,3 @@
+include hikvision/version.txt
+include CHANGES.txt
+include README.md
