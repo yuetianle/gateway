@@ -11,9 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{04CC5CF2-9947-49EE-B9CC-72467447E78E}</ProjectGuid>
+    <ProjectGuid>{0D73D46F-36EB-4B0A-8822-14CC28C9AAB9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>device_host</RootNamespace>
+    <RootNamespace>device_service</RootNamespace>
+    <ProjectName>device_manager</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -35,12 +36,10 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\vs_props\platform.props" />
-    <Import Project="$(SolutionDir)\vs_props\python2.7.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\vs_props\platform.props" />
-    <Import Project="$(SolutionDir)\vs_props\python2.7.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -61,7 +60,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>cmd /c $(ProjectDir)PostBuild.cmd $(OutDir) gateway d</Command>
@@ -93,28 +91,31 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\device_data_node.h" />
-    <ClInclude Include="include\device_host.h" />
-    <ClInclude Include="include\msg_manager.h" />
-    <ClInclude Include="include\msg_processer.h" />
+    <ClInclude Include="include\device_host_manager.h" />
+    <ClInclude Include="include\host_bootloader.h" />
+    <ClInclude Include="include\msg_distribution.h" />
     <ClInclude Include="include\msg_xml_builder.h" />
     <ClInclude Include="include\msg_xml_parser.h" />
-    <ClInclude Include="include\python_module_loader.h" />
+    <ClInclude Include="msg_manager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="msg_manager.cpp" />
     <ClCompile Include="src\device_data_node.cpp" />
-    <ClCompile Include="src\device_host.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\msg_manager.cpp" />
-    <ClCompile Include="src\msg_processer.cpp" />
+    <ClCompile Include="src\device_host_manager.cpp" />
+    <ClCompile Include="src\device_service.cpp" />
+    <ClCompile Include="src\host_bootloader.cpp" />
+    <ClCompile Include="src\msg_distribution.cpp" />
     <ClCompile Include="src\msg_xml_builder.cpp" />
     <ClCompile Include="src\msg_xml_parser.cpp" />
-    <ClCompile Include="src\python_module_loader.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="host_cfg.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PostBuild.cmd" />

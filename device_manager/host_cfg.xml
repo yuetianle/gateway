@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<host_list>
+	<host dir="" exe="device_host" manufacture="hikvision" counts="1"></host>
+	<host dir="" exe="device_host" manufacture="onvif" counts="1"></host>
+	<host dir="" exe="device_host" manufacture="psia" counts="1"></host>
+</host_list>

@@ -10,7 +10,7 @@
 #pragma comment(lib,  "vistek_util.lib")
 #pragma comment(lib,  "libasio.lib")
 #pragma comment(lib,  "vistek_logger.lib")
-#pragma comment(lib,  "device_plugins_loader.lib")
+//#pragma comment(lib,  "device_plugins_loader.lib")
 #pragma comment (lib, "python27.lib")
 #endif // _WIN32
 
