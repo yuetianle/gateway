@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <intel_msdk>$(sdk_root)\intel_msdk_2013_r2\</intel_msdk>
+    <intel_msdk_bin>$(intel_msdk)bin\$(Platform)</intel_msdk_bin>
+    <intel_msdk_include>$(intel_msdk)include</intel_msdk_include>
+    <intel_msdk_lib>$(intel_msdk)lib\$(Platform)\</intel_msdk_lib>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(intel_msdk_include);$(IncludePath)</IncludePath>
+    <LibraryPath>$(intel_msdk_lib);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="intel_msdk">
+      <Value>$(intel_msdk)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="intel_msdk_bin">
+      <Value>$(intel_msdk_bin)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="intel_msdk_include">
+      <Value>$(intel_msdk_include)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="intel_msdk_lib">
+      <Value>$(intel_msdk_lib)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

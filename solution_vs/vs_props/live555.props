@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <Live555Home>$(SolutionDir)3rd\live555\</Live555Home>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(IncludePath);$(BoostHome);$(Live555Home);</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile />
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(Live555Home)liveMedia/include/;$(Live555Home)BasicUsageEnvironment/include/;$(Live555Home)UsageEnvironment/include/;$(Live555Home)groupsock/include/;.;$(LocalSrcDir)include;$(CommonSrcDir)include;$(SolutionDir)vistek_logger\include\</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="Live555Home">
+      <Value>$(Live555Home)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

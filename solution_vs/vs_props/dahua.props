@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <sdk_root>$(Registry:HKEY_LOCAL_MACHINE\Software\vistek\dev@sdk_root)</sdk_root>
+    <dahua_home>$(sdk_root)\dahua\</dahua_home>
+    <dahua_include>$(dahua_home)windows\$(Platform)\include\</dahua_include>
+    <dahua_lib>$(dahua_home)windows\$(Platform)\lib\</dahua_lib>
+    <dahua_bin>$(dahua_home)windows\$(Platform)\bin\</dahua_bin>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(dahua_include);$(IncludePath)</IncludePath>
+    <LibraryPath>$(dahua_lib);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <PreBuildEvent />
+    <PreBuildEvent />
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="sdk_root">
+      <Value>$(sdk_root)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="dahua_home">
+      <Value>$(dahua_home)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="dahua_include">
+      <Value>$(dahua_include)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="dahua_lib">
+      <Value>$(dahua_lib)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="dahua_bin">
+      <Value>$(dahua_bin)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
