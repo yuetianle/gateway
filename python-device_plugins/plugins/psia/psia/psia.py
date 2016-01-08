@@ -60,8 +60,6 @@ def request_cmd(device_id, uri, params):
     parser.add_func_param({'device_id':device_id})
 
     func_name = parser.func_name('func')
-    #if func_name != 'register_device' and func_name != 'unregister_device':
-        #func_name = 'request'
     print('list:',func_lists, 'name:', func_name)
     if func_name in func_lists:
         cmd_func = getattr(psia_wrap, func_name)
@@ -80,4 +78,6 @@ if __name__ == '__main__':
     out = request_cmd('172.16.1.190', 'http://admin:12345@172.16.1.190:80/device/meida?func=register_device', '')
     #print('out:', out, 'len:', len(out), 'type:',type(out))
     out = request_cmd('172.16.1.190', 'http://172.16.1.190:80/device/meida?func=get_stream_url', '')
+    #print('out:', out, 'len:', len(out), 'type:',type(out))
+    out = request_cmd('172.16.1.190', 'http://172.16.1.190:80/device/meida?func=get_device_status', '')
     #print('out:', out, 'len:', len(out), 'type:',type(out))

@@ -1,16 +1,79 @@
 #!/usr/bin/env python
-#-*- coding=utf8 -*-
+# -*- coding=utf8 -*-
 import requests
 import collections
+
+from multiprocessing import Process, Pipe, RLock
+from multiprocessing.managers import BaseManager
+import Queue, threading, sys
+from threading import Thread
+
 try:
     import xml.etree.cElementTree as ET
 except:
     import xml.etree.ElementTree as ET
+
+class QueueManager(BaseManager):
+    pass
+device_status_queue = QueueManager.register('get_device_status_queue', callable=lambda: device_status_queue)
+
+server_manager = QueueManager(address=('', 88000), authkey='vistek@abc')
+server_manager.start()
+
+# working thread   
+class Worker(Thread):   
+   worker_count = 0   
+   def __init__( self, workQueue, resultQueue, timeout = 0, **kwds):   
+       Thread.__init__( self, **kwds )   
+       self.id = Worker.worker_count   
+       Worker.worker_count += 1   
+       self.setDaemon( True )   
+       self.workQueue = workQueue   
+       self.resultQueue = resultQueue   
+       self.timeout = timeout   
+       self.start( )   
+   def run( self ):   
+       ''' the get-some-work, do-some-work main loop of worker threads '''   
+       while True:   
+           try:   
+               callable, args, kwds = self.workQueue.get(timeout=self.timeout)   
+               res = callable(*args, **kwds)   
+               print "worker[%2d]: %s" % (self.id, str(res) )   
+               self.resultQueue.put( res )   
+           except Queue.Empty:   
+               break   
+           except :   
+               print 'worker[%2d]' % self.id, sys.exc_info()[:2]   
+                  
+class WorkerManager:   
+   def __init__( self, num_of_workers=10, timeout = 1):   
+       self.workQueue = Queue.Queue()   
+       self.resultQueue = Queue.Queue()   
+       self.workers = []   
+       self.timeout = timeout   
+       self._recruitThreads( num_of_workers )   
+   def _recruitThreads( self, num_of_workers ):   
+       for i in range( num_of_workers ):   
+           worker = Worker( self.workQueue, self.resultQueue, self.timeout )   
+           self.workers.append(worker)   
+   def wait_for_complete( self):   
+       # ...then, wait for each of them to terminate:   
+       while len(self.workers):   
+           worker = self.workers.pop()   
+           worker.join( )   
+           if worker.isAlive() and not self.workQueue.empty():   
+               self.workers.append( worker )   
+       print "All jobs are are completed."   
+   def add_job( self, callable, *args, **kwds ):   
+       self.workQueue.put( (callable, args, kwds) )   
+   def get_result( self, *args, **kwds ):   
+       return self.resultQueue.get( *args, **kwds )  
+
 device_info = collections.namedtuple('device_info', 'device_id ip, port, user, pwd')
 device_lists = dict()
 
+device_status_manager = WorkerManager(20, 5)
 class psia_converter():
-    """ 转换PISA内容为公司标准XML"""
     def __init__(self, content):
         self.content = content
         ET.register_namespace('', 'urn:psialliance-org')
@@ -52,7 +115,7 @@ class psia_converter():
         #device_info_node = self.xml_node.find('root_ns:DeviceInfo', self.psia_ns)
         #print('device_info:',device_info_node)
         device_status_node = ET.Element('device_status')
-        if self.xml_node.tag != 'DeviceStatus':
+        if str(self.xml_node.tag) != '{urn:psialliance-org}DeviceStatus':
             device_status_node.text = 'false'
         else:
             device_status_node.text = 'true'
@@ -70,7 +133,6 @@ class psia_converter():
                 return ''
 
 class psia_uri_converter():
-    """ URI 转换为PSIA标准URI"""
     def __init__(self, func_name, device):
         #self._psia_uri = self._to_psia_uri(func_name)[0]
         self._device = device
@@ -86,7 +148,6 @@ class psia_uri_converter():
             return  ('http://{0}:{1}/PSIA/System/status'.format(self._device.ip, self._device.port), 'GET')
 
 def register_device(device_id, ip, port, user_name, user_pwd):
-    """ 注册设备"""
     global device_lists
     print(locals())
     register_node = ET.Element('register')
@@ -95,51 +156,73 @@ def register_device(device_id, ip, port, user_name, user_pwd):
     session_node = ET.SubElement(register_node, 'session')
     if device_id not in device_lists:
         device_lists[device_id] = device_info(device_id=device_id, ip=ip, port=port, user = user_name, pwd = user_pwd)
+        device_status_manager.add_job(get_device_status, device_id)
     register_xml = ET.tostring(register_node, encoding="UTF-8", method="xml")
     print('out:', register_xml, 'len:', len(register_xml))
     return (register_xml, len(register_xml))
 def unregister_device(device_id):
-    """ 反注册设备 """
     global device_lists
     if device_id in device_lists:
         device_lists.pop(device_id)
-def request(device_id, uri, method):
+def request(device_id, uri, method, timeout=None):
     global device_lists
     print(locals())
+    if timeout is None:
+        timeout = 5
     if device_id not in device_lists:
         return ("", 0)
     else:
         request_auth = (device_lists.get(device_id).user, device_lists.get(device_id).pwd)
-        response = requests.request(method, uri, auth=request_auth)
+        response = requests.request(method, uri, auth=request_auth, timeout=timeout)
         if response.status_code == 200:
             return response.text
         else:
             print('error code:', response.status_code, 'text:', response.text)
-            return ''
+            return None
 
 def get_stream_url(device_id, channel=None):
     global device_lists
-    print(locals())
+    #print(locals())
     if device_id not in device_lists:
         return ("", 0)
     tmp_psia_uri = psia_uri_converter('get_stream_url', device_lists.get(device_id))
     tmp_out_data = request(device_id, tmp_psia_uri.psia_uri(), tmp_psia_uri.method())
-    xml_converter = psia_converter(tmp_out_data)
-    out_xml = xml_converter.std_xml('to_stream_url', device_lists.get(device_id))
-    return (out_xml, len(out_xml))
+    if tmp_out_data is None:
+        return ('', 0)
+    else:
+        print(type(tmp_out_data))
+        if isinstance(tmp_out_data, unicode):
+            xml_converter = psia_converter(tmp_out_data.encode('utf-8'))
+        else:
+            xml_converter = psia_converter(tmp_out_data)
+        out_xml = xml_converter.std_xml('to_stream_url', device_lists.get(device_id))
+        return (out_xml, len(out_xml))
 
 def get_device_status(device_id):
     global device_lists
-    print(locals())
+    #print(locals())
     if device_id not in device_lists:
         return ("", 0)
     tmp_psia_uri = psia_uri_converter('get_device_status', device_lists.get(device_id))
     tmp_out_data = request(device_id, tmp_psia_uri.psia_uri(), tmp_psia_uri.method())
-    xml_converter_result = psia_converter(tmp_out_data)
-    out_xml = xml_converter_result.std_xml('to_device_status_xml')
-    return (out_xml, len(out_xml))
+    if tmp_out_data is None:
+        return ("", 0)
+    else:
+        xml_converter_result = psia_converter(tmp_out_data)
+        out_xml = xml_converter_result.std_xml('to_device_status_xml')
+        return (out_xml, len(out_xml))
 if __name__ == '__main__':
     register_device('111','172.16.1.190',80,'admin','12345')
+    #out = request('111', 'http://172.16.1.190:80/PSIA/Streaming/channels', 'GET')
+    #print('out:', out, 'len:', len(out), 'type:', type(out))
+    out = get_stream_url('111')
+    print('out:', out, 'len:', len(out), 'type:', type(out))
+    out = get_device_status('111')
+    print('out:', out, 'len:', len(out), 'type:', type(out))
+    
+    #----*  error case *------
+
+    register_device('111','172.16.1.220',80,'admin','12345')
     #out = request('111', 'http://172.16.1.190:80/PSIA/Streaming/channels', 'GET')
     #print('out:', out, 'len:', len(out), 'type:', type(out))
     out = get_stream_url('111')
