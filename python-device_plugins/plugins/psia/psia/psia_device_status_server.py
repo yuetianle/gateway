@@ -88,10 +88,12 @@ def start_device_status_server():
 
         print(psia_wrap.device_status_lists.items())
         out_queue = server_manager.get_device_status_queue();
+        print('queue:', out_queue)
         while not device_status_manager.result_queue_empty():
             out_str = device_status_manager.get_result()
             device_status_node = ET.fromstring(out_str[0])
             dev_node_ip = device_status_node.get('ip')
+            out_queue.put(out_str)
             if dev_node_ip in psia_wrap.device_status_lists and device_status_node.text != str(psia_wrap.device_status_lists.get(dev_node_ip)):
                 print(out_str)
                 out_queue.put(out_str)
@@ -99,5 +101,6 @@ def start_device_status_server():
         print('type:', type(out_queue))
         time.sleep(5)
 if __name__ == '__main__':
+    psia_wrap.register_device('192.168.1.106','192.168.1.106', 80,'admin','12345')
     freeze_support()
     start_device_status_server()
