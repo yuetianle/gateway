@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 import psia_wrap
+import sys
 try:
     import xml.etree.cElementTree as ET
 except:
@@ -13,10 +14,20 @@ import Queue, time
 class QueueManager(BaseManager):
     pass
 device_status_queue = Queue.Queue()
+device_lists = dict()
+device_status_lists = dict()
 def get_device_status_queue():
     global device_status_queue
     return device_status_queue
+def get_device_lists():
+    global device_lists
+    return device_lists
+def get_device_status_lists():
+    global device_status_lists
+    return device_status_lists
 QueueManager.register('get_device_status_queue', callable=get_device_status_queue)
+QueueManager.register('get_device_lists', callable=get_device_lists)
+QueueManager.register('get_device_status_lists', callable=get_device_status_lists)
 server_manager = QueueManager(address=('127.0.0.1', 60000), authkey='vistek@abc')
 connect_server_start = False
 def start_connect_server():
@@ -79,28 +90,34 @@ class WorkerManager:
         return self.resultQueue.get( *args, **kwds )
 def start_device_status_server():
     global server_manager
+    #global device_lists
+    #global device_status_lists
     start_connect_server()
     while 1:
+        device_lists = server_manager.get_device_lists()
+        device_status_lists = server_manager.get_device_status_lists()
+        print('device_lists:', device_lists, 'items:', device_lists.items())
+        print('device_status_lists', device_status_lists, 'items:', device_lists.items())
         device_status_manager = WorkerManager(20, 5)
-        for device_id, device_value in psia_wrap.device_lists.items():
+        for device_id, device_value in device_lists.items():
             device_status_manager.add_job(psia_wrap.get_device_status, device_value.device_id)
         device_status_manager.wait_for_complete()
 
-        print(psia_wrap.device_status_lists.items())
-        out_queue = server_manager.get_device_status_queue();
-        print('queue:', out_queue)
+        out_queue = server_manager.get_device_status_queue()
         while not device_status_manager.result_queue_empty():
             out_str = device_status_manager.get_result()
+            print('out_str:', out_str)
             device_status_node = ET.fromstring(out_str[0])
             dev_node_ip = device_status_node.get('ip')
             out_queue.put(out_str)
-            if dev_node_ip in psia_wrap.device_status_lists and device_status_node.text != str(psia_wrap.device_status_lists.get(dev_node_ip)):
-                print(out_str)
+            if device_status_lists.has_key(dev_node_ip ) and device_status_node.text != str(device_status_lists.get(dev_node_ip)):
+                print('status_change:', out_str)
                 out_queue.put(out_str)
 
         print('type:', type(out_queue))
         time.sleep(5)
 if __name__ == '__main__':
-    psia_wrap.register_device('192.168.1.106','192.168.1.106', 80,'admin','12345')
+    print('start server')
     freeze_support()
     start_device_status_server()
+    print('end server')

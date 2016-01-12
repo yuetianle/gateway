@@ -2,7 +2,7 @@
 # -*- coding=utf8 -*-
 import requests
 import collections
-
+import psia_device_status_client
 from multiprocessing import Process, Pipe, RLock
 from multiprocessing.managers import BaseManager
 from multiprocessing import Lock, freeze_support
@@ -128,6 +128,14 @@ def register_device(device_id, ip, port, user_name, user_pwd):
     if device_id not in device_lists:
         device_lists[device_id] = device_info(device_id=device_id, ip=ip, port=port, user = user_name, pwd = user_pwd)
         device_status_lists[ip] = True
+        tmp_lists = psia_device_status_client.get_device_lists()
+        tmp_lists.update(device_lists)
+        print('items:', tmp_lists.items(), 'keys:', tmp_lists.keys())
+        #tmp_lists[device_id] = device_info(device_id=device_id, ip=ip, port=port, user = user_name, pwd = user_pwd)
+        tmp_status_lists = psia_device_status_client.get_device_status_lists()
+        tmp_status_lists.update(device_status_lists)
+        print(tmp_status_lists.items())
+        #tmp_status_lists[ip] = True
     register_xml = ET.tostring(register_node, encoding="UTF-8", method="xml")
     print('out:', register_xml, 'len:', len(register_xml))
     return (register_xml, len(register_xml))
@@ -136,13 +144,16 @@ def unregister_device(device_id):
     if device_id in device_lists:
         device_lists.pop(device_id)
 def request(device_id, uri, method, timeout=None):
-    global device_lists
+    #global device_lists
+    device_lists = psia_device_status_client.get_device_lists()
     print(locals())
     if timeout is None:
         timeout = 5
-    if device_id not in device_lists:
-        return ("", 0)
+    if not device_lists.has_key(device_id):
+        return None
     else:
+        login_info = device_lists.get(device_id)
+        print('login_info', login_info)
         request_auth = (device_lists.get(device_id).user, device_lists.get(device_id).pwd)
         response = requests.request(method, uri, auth=request_auth, timeout=timeout)
         if response.status_code == 200:
@@ -152,10 +163,11 @@ def request(device_id, uri, method, timeout=None):
             return None
 
 def get_stream_url(device_id, channel=None):
-    global device_lists
+    #global device_lists
     #print(locals())
-    if device_id not in device_lists:
-        return ("", 0)
+    device_lists = psia_device_status_client.get_device_lists()
+    if not device_lists.has_key(device_id):
+        return ('', 0)
     tmp_psia_uri = psia_uri_converter('get_stream_url', device_lists.get(device_id))
     tmp_out_data = request(device_id, tmp_psia_uri.psia_uri(), tmp_psia_uri.method())
     if tmp_out_data is None:
@@ -170,9 +182,12 @@ def get_stream_url(device_id, channel=None):
         return (out_xml, len(out_xml))
 
 def get_device_status(device_id):
-    global device_lists
+    #global device_lists
     #print(locals())
-    if device_id not in device_lists:
+    device_lists = psia_device_status_client.get_device_lists()
+    #if device_id not in device_lists:
+    if not device_lists.has_key(device_id ):
+        print("device not exist, id:", device_id)
         return ("", 0)
     tmp_psia_uri = psia_uri_converter('get_device_status', device_lists.get(device_id))
     tmp_out_data = request(device_id, tmp_psia_uri.psia_uri(), tmp_psia_uri.method())
@@ -181,6 +196,7 @@ def get_device_status(device_id):
     else:
         xml_converter_result = psia_converter(tmp_out_data, device_lists.get(device_id))
         out_xml = xml_converter_result.std_xml('to_device_status_xml', device_lists.get(device_id))
+        print('out_xml:', out_xml)
         return (out_xml, len(out_xml))
 
 """
@@ -263,15 +279,18 @@ def start_device_status_server():
         time.sleep(5)
 """
 if __name__ == '__main__':
+    register_device('111','172.16.1.190',80,'admin','12345')
+    register_device('222','172.16.1.191',80,'admin','12345')
     #freeze_support()
     #start_device_status_server()
     print('here')
-    out = register_device('111','192.168.1.106',80,'admin','12345')
-    print('out:', out, 'len:', len(out), 'type:', type(out))
-    out = get_stream_url('111')
-    print('out:', out, 'len:', len(out), 'type:', type(out))
-    out = get_device_status('111')
-    print('out:', out, 'len:', len(out), 'type:', type(out))
+    #register_device('111','172.16.1.190',80,'admin','12345')
+    #out = request('111', 'http://172.16.1.190:80/PSIA/Streaming/channels', 'GET')
+    #print('out:', out, 'len:', len(out), 'type:', type(out))
+    #out = get_stream_url('111')
+    #print('out:', out, 'len:', len(out), 'type:', type(out))
+    #out = get_device_status('111')
+    #print('out:', out, 'len:', len(out), 'type:', type(out))
     
     #----*  error case *------
 
