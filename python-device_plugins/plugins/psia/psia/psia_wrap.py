@@ -263,18 +263,15 @@ def start_device_status_server():
         time.sleep(5)
 """
 if __name__ == '__main__':
-    register_device('111','172.16.1.190',80,'admin','12345')
-    register_device('222','172.16.1.191',80,'admin','12345')
     #freeze_support()
     #start_device_status_server()
     print('here')
-    #register_device('111','172.16.1.190',80,'admin','12345')
-    #out = request('111', 'http://172.16.1.190:80/PSIA/Streaming/channels', 'GET')
-    #print('out:', out, 'len:', len(out), 'type:', type(out))
-    #out = get_stream_url('111')
-    #print('out:', out, 'len:', len(out), 'type:', type(out))
-    #out = get_device_status('111')
-    #print('out:', out, 'len:', len(out), 'type:', type(out))
+    out = register_device('111','192.168.1.106',80,'admin','12345')
+    print('out:', out, 'len:', len(out), 'type:', type(out))
+    out = get_stream_url('111')
+    print('out:', out, 'len:', len(out), 'type:', type(out))
+    out = get_device_status('111')
+    print('out:', out, 'len:', len(out), 'type:', type(out))
     
     #----*  error case *------
 

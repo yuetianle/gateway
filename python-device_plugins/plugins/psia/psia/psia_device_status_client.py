@@ -20,4 +20,8 @@ def start_device_status_client():
         time.sleep(0.01)
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     start_device_status_client()
+=======
+    start_device_status_client()
+>>>>>>> a217e2cebe1143194c21a5f7a7fa9141f0b45999

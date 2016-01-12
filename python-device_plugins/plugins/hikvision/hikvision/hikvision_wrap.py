@@ -6,6 +6,9 @@ import os
 import collections
 from threading import RLock
 import test_logger
+import threading
+import time
+
 try:
     import xml.etree.cElementTree as ET
 except:
@@ -82,7 +85,7 @@ class deviceinfo_v40(Structure):
                 ('byRes2', c_ubyte*256)];
     def __str__(self):
         return '{0}{1}'.format(self.strDeviceV30.byIPChanNum, self.byRetryLoginTime)
-class time(Structure):
+class hik_time(Structure):
     _fields_ = [('dwYear',c_ulong),
                 ('dwMonth',c_ulong),
                 ('dwDay',c_ulong),
@@ -131,6 +134,7 @@ def register_device(device_id, ip, port, user_name, user_pwd):
     global device_mutex
     global device_xml_node
     global xml_mutex
+    global dll_mutex
     if sys.platform == 'win32':
         dll_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'HCNetSDK'))
         print('handle before:', DllHandle)
@@ -175,15 +179,17 @@ def register_device(device_id, ip, port, user_name, user_pwd):
         session_node.text = str(login_session.session_id)
         device_mutex.release()
     session_xml = ET.tostring(register_node, encoding="UTF-8", method="xml")
-    print('device_lists:', device_lists)
+    #print('device_lists:', device_lists)
     print('session_xml:', session_xml, 'type', type(session_xml), 'len:', len(session_xml), 'type:', type(len(session_xml)))
     return (session_xml, len(session_xml))
 def get_stream_url(device_id, channel):
     global device_lists
     global DllHandle
-    print('stream_url: device_lists:', device_lists, 'dllhandle:', DllHandle)
+    global dll_mutex
+    test_logger.logger.debug('get_stream_url start')
+    #print('stream_url: device_lists:', device_lists, 'dllhandle:', DllHandle)
     if device_id not in device_lists:
-        return -1
+        return ('', 0)
     login_session = device_lists.get(device_id)
     encode_node = ET.Element('AudioVideoCompressInfo')
     channel_node = ET.SubElement(encode_node, 'VideoChannelNumber')
@@ -195,11 +201,11 @@ def get_stream_url(device_id, channel):
     device_encode_ability_v20 = c_ulong(0x008)
     out_data = create_string_buffer(1024*10)
     out_data_len = c_ulong(1024*10)
-    dll_mutex.acquire()
+    #dll_mutex.acquire()
     ret = DllHandle.NET_DVR_GetDeviceAbility(login_session.session_id, device_encode_ability_v20, cast(in_xml, c_char_p), in_xml_len, out_data, out_data_len)
     hik_rtsp = rtspcfg()
     DllHandle.NET_DVR_GetRtspConfig(login_session.session_id, 0, byref(hik_rtsp), sizeof(rtspcfg))
-    dll_mutex.release()
+    #dll_mutex.release()
     stream_urls = list()
     if ret:
         root_node = ET.fromstring(out_data.value)
@@ -215,7 +221,9 @@ def get_stream_url(device_id, channel):
             for sub_item in main_item.iter('SubChannelList'):
                 url_sub = 'rtsp://' + str(login_session.ip) + ':' + str(hik_rtsp.wPort) + '/h264/ch' + channel_index.text + '/sub/av_stream'
                 stream_urls.append(url_sub)
+        test_logger.logger.debug('get_stream_url success urls:%s', str(stream_urls))
     else:
+        test_logger.logger.debug('get_stream_url fail get xml fail.')
         test_logger.logger.debug("error")
     #test_logger.logger.debug(stream_urls)
     urls = ET.Element('stream_url_lists')
@@ -231,29 +239,36 @@ def get_device_status(device_id, channel=None):
     """ get device status"""
     global device_lists
     global DllHandle
-    print(locals())
-    print('status: device_lists:', device_lists, 'dllhandle:', DllHandle)
+    global dll_mutex
+    #print(locals())
+    #print('status: device_lists:', device_lists, 'dllhandle:', DllHandle)
+    test_logger.logger.debug('get_device_status start')
     if device_id not in device_lists:
-        return -1
+        return ('', 0)
     if channel is None:
         channel = c_ulong(0xffffffff)
     login_session = device_lists.get(device_id)
-    tmp_time = time()
+    tmp_time = hik_time()
     ret = c_ulong()
     try:
-        dll_mutex.acquire()
-    	tmp_ret = DllHandle.NET_DVR_GetDVRConfig(login_session.session_id, 118, channel, pointer(tmp_time), sizeof(time),pointer(ret))
-        dll_mutex.release()
+        #dll_mutex.acquire()
+    	tmp_ret = DllHandle.NET_DVR_GetDVRConfig(login_session.session_id, 118, channel, pointer(tmp_time), sizeof(hik_time),pointer(ret))
+        #dll_mutex.release()
     	device_status = ET.Element('device_status')
+        device_status.set('ip', login_session.ip)
+        device_status.set('port', str(login_session.port))
     	if tmp_ret:
       	  device_status.text = 'ture'
     	else:
       	  device_status.text = 'false'
     	status_xml = ET.tostring(device_status, encoding='UTF-8', method='xml')
-    	print('return:', status_xml, 'types:', type(status_xml), 'len:', len(status_xml), 'type:', type(len(status_xml)))
+    	#print('return:', status_xml, 'types:', type(status_xml), 'len:', len(status_xml), 'type:', type(len(status_xml)))
+        test_logger.logger.debug('get_device_status success statusxml:%s', status_xml)
     	return (status_xml, len(status_xml))
     except:
+        test_logger.logger.debug('get_device_status exception statusxml:%s', status_xml)
     	print('exception')
+        return ('', 0)
 def unregister_device(device_id):
     """ unregister a hikvision device"""
 
@@ -264,6 +279,9 @@ if __name__ == '__main__':
         register_device('172.16.1.190','172.16.1.190', 8000, 'admin', '12345')
         register_device('172.16.1.191','172.16.1.191', 8000, 'admin', '12345')
         get_stream_url('172.16.1.190', 0)
+        while 1:
+            get_device_status('172.16.1.190')
+            time.sleep(5)
 
     #handle= WinDLL('HCNetSDK')
     #b_init = handle.NET_DVR_Init()
@@ -296,9 +314,9 @@ if __name__ == '__main__':
     #login_id = handle.NET_DVR_Login_V40(pointer(hik_login_info), pointer(hik_device_info))
     #ret = c_ulong()
     #channel = c_ulong(0xffffffff)
-    #tmp_time = time()
-    #tmp_ret = handle.NET_DVR_GetDVRConfig(login_id, 118, channel, pointer(tmp_time), sizeof(time),pointer(ret))
-    #test_logger.logger.debug('time:',tmp_ret)
+    #tmp_time = hik_time()
+    #tmp_ret = handle.NET_DVR_GetDVRConfig(login_id, 118, channel, pointer(tmp_time), sizeof(hik_time),pointer(ret))
+    #test_logger.logger.debug('hik_time:',tmp_ret)
     #test_logger.logger.debug(tmp_time)
     ##login_id = handle.NET_DVR_Login_V40(None, None)
     ##error_code = handle.NET_DVR_GetLastError()
